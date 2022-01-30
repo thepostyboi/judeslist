@@ -22,7 +22,7 @@
         <td>{{user.email}}</td>
         <td>{{user.username}}</td>
         <td>{{user.date_created}}</td>
-        <td>{{user.admin}}</td>
+        <td><a href = "/giveadmin/{{user.id}}">{{user.admin}}</a></td>
         <td><a href = "/ban/{{user.id}}">{{user.banned}}</a></td>
       </tr>
     {% endfor %}

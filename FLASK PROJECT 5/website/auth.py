@@ -194,3 +194,18 @@ def ban(userid):
     else:
         flash("access denied", category="error")
         return redirect(url_for("views.home"))
+
+@auth.route("/giveadmin/<userid>")
+@login_required
+def giveadmin(userid):
+    if current_user.admin ==1 and current_user.banned == 0:
+        user = User.query.filter_by(id=userid).first()
+        if user.admin == 1:
+            user.admin = 0
+        else:
+            user.admin = 1
+        db.session.commit()
+        return redirect(url_for("auth.admin"))
+    else:
+        flash("access denied", category="error")
+        return redirect(url_for("views.home"))
