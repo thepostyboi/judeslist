@@ -14,30 +14,18 @@
 <p class="solid" style="border-style: solid;"></p>
 
 
-<!-- bad code for @ ing people -->
-<!-- must include replacing the @ in the comment text -->
-<!-- currently outputs "mentions - then list of @ed users " -->
+
 
 {% for cm in flisting.Comments %}
-{% if "@" in cm.text %}
-  <a>Mentioned:</a>
-  {% set splited = cm.text.split(" ") %}
-  {% set locals = [] %}
-  {% for i in range(0,splited|length) %}
-    {% if "@" in splited[i] %}
-      {% do locals.append(splited[i]) %}
-    {% endif %}
-
-  {% endfor %}
-  {% for i in range(0, locals|length) %}
-    {% if User.query.filter_by(id = locals[i][1:]).first() %}
-      <a href="/user/{{ locals[i][1:]}} ">{{locals[i]}}</a>
-    {% endif %}
-  {% endfor %}
-
-{% endif %}
-<p><a href="/user/{{ cm.user_id }}">ID {{ cm.user_id }}</a>: {{ cm.text|urlize }}</p>
-<p class="solid" style="border-style: solid;"></p>
+  {% if cm.removed == 1 %}
+    <p><a href="/user/{{ cm.user_id }}">ID {{ cm.user_id }}</a>: COMMENT REMOVED</p>
+  {% else %}
+    <p><a href="/user/{{ cm.user_id }}">ID {{ cm.user_id }}</a>: {{ cm.text|urlize }}</p>
+  {% endif %}
+  {% if current_user.admin == 1 %}
+    <a href="/removecomment/{{ cm.id }}">REMOVE/UNREMOVE COMMENT</a>
+  {% endif %}
+  <p class="solid" style="border-style: solid;"></p>
 {% endfor %}
 
 

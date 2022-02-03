@@ -68,5 +68,6 @@ class Comments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(100))
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    removed = db.Column(db.Boolean(),default=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     Listing_id = db.Column(db.Integer, db.ForeignKey("listing.id"))

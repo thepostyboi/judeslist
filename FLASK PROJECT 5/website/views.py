@@ -133,6 +133,21 @@ def remove(urlforlisting):
         flash("access denied", category="error")
         return redirect(url_for("views.home"))
 
+@views.route("/removecomment/<idforcomment>")
+@login_required
+def removecomment(idforcomment):
+    if current_user.admin == 1 and current_user.banned == 0:
+        comment = Comments.query.filter_by(id=idforcomment).first()
+        if comment.removed == 1:
+            comment.removed = 0
+        else:
+            comment.removed = 1
+        db.session.commit()
+        return redirect(url_for("views.listings", urlforlisting = comment.Listing_id))
+    else:
+        flash("access denied", category="error")
+        return redirect(url_for("views.home"))
+
 @views.route("/about")
 def about():
     return render_template("about.html", current_user = current_user)
