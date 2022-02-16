@@ -36,7 +36,6 @@ def upload():
         return redirect(url_for("views.home"))
     pathtwo = os.path.abspath(os.getcwd())
     path = fr'{pathtwo}\website\static\uploads'
-    flash(pathtwo)
     if request.method == 'POST':
         file = request.files["input"]
         key = str(uuid.uuid1())
