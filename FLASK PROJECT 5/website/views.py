@@ -18,6 +18,7 @@ views = Blueprint("views", __name__)
 def home():
     page = request.args.get("page",1,type=int)
     listing = Listing.query.order_by(desc(Listing.date_created))
+    secondlisting = Listing.query.outerjoin(Likes).group_by(Listing.id).order_by(db.func.count(Likes.id).desc(), Listing.date_created.desc())
     if request.method == "POST":
         search = request.form.get("search")
         return redirect(url_for("views.search_results", search = search))
