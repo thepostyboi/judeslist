@@ -11,6 +11,8 @@ DB_NAME = "database.db"
 def create_app():
     app = Flask(__name__)
     app.jinja_options['extensions'].append('jinja2.ext.do')
+    #app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+    #only on replit version to limit size of upload
     app.config['SECRET_KEY'] = "helloworld"
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     db.init_app(app)
